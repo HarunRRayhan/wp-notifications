@@ -12,6 +12,7 @@ class Table
 
 		$charset_collate = $wpdb->get_charset_collate();
 		$table_name      = static::getTableName();
+		$users_table     = $wpdb->prefix . 'users';
 
 		$sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
 		  id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -23,6 +24,11 @@ class Table
 		  created_at datetime DEFAULT CURRENT_TIMESTAMP,
 		  PRIMARY KEY (id)
 		  INDEX (user_id, read_at, created_at)
+		  CONSTRAINT foreign_key_user_id
+		    FOREIGN KEY (user_id)
+		    REFERENCES $users_table(id)
+		        ON UPDATE CASCADE
+		        ON DELETE CASCADE
 		) $charset_collate;";
 
 
@@ -31,10 +37,25 @@ class Table
 
 	public static function setIndex()
 	{
-		;
 		global $wpdb;
 		$table_name = static::getTableName();
 		$sql        = "CREATE INDEX index_name ON `{$table_name}` (user_id, read_at, created_at)";
+
+		return $wpdb->query( $sql );
+	}
+
+	public static function setConstrain()
+	{
+		global $wpdb;
+		$users_table = $wpdb->prefix . 'users';
+		$table_name  = static::getTableName();
+
+		$sql = "ALTER TABLE $table_name
+               	ADD CONSTRAINT foreign_key_user_id
+		    	FOREIGN KEY (user_id)
+		    	REFERENCES $users_table(id)
+		        	ON UPDATE CASCADE
+		        	ON DELETE CASCADE";
 
 		return $wpdb->query( $sql );
 	}

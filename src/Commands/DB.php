@@ -73,6 +73,26 @@ class DB extends WP_CLI_Command
 	}
 
 	/**
+	 * Add Foreign Key Constrains
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp raynoti db foreign
+	 *
+	 * @when after_wp_load
+	 * @alias delete
+	 */
+	function foreign( $args, $assoc_args )
+	{
+		$db = Table::setConstrain();
+		if ( ! is_wp_error( $db ) ) {
+			\WP_CLI::success( '"' . Table::getTableName() . '" foreign key constrain added successfully' );
+		} else {
+			\WP_CLI::error( "Something wrong. Please check your database configurations" );
+		}
+	}
+
+	/**
 	 * Seed Notifications Table with Dummy Data
 	 *
 	 * ## OPTIONS
@@ -83,7 +103,7 @@ class DB extends WP_CLI_Command
 	 * default: 100
 	 *
 	 * [--chunk=<chunk>]
-	 * : Total number of notification want to add once
+	 * : Number of notifications want to add per chunk
 	 * ---
 	 * default: 100
 	 *
