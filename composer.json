@@ -1,7 +1,7 @@
 {
   "name": "rayhan/ray-notifications",
   "description": "Display Database Optimization in a Plugin",
-  "type": "plugin",
+  "type": "wordpress-plugin",
   "license": "GPL2",
   "authors": [
     {
@@ -10,11 +10,11 @@
     }
   ],
   "minimum-stability": "dev",
-  "require": {},
+  "require": {
+    "fzaninotto/faker": "^1.9@dev"
+  },
   "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true
+    "optimize-autoloader": true
   },
   "autoload": {
     "psr-4": {

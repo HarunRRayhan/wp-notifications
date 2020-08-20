@@ -3,25 +3,29 @@
 
 namespace HarunRay\Notifications;
 
+use HarunRay\Notifications\Commands\Command;
+use HarunRay\Notifications\Commands\DB;
 use HarunRay\Notifications\Traits\Singleton;
 
 final class Initialize
 {
 	use Singleton;
 
-	/**
-	 * @return void
-	 */
-	public static function activate()
+	public function __construct()
 	{
-
+		$this->registerCommands();
+		$this->registerFilters();
 	}
 
-	/**
-	 * @return void
-	 */
-	public static function deactivate()
+	public function registerFilters()
 	{
+	}
 
+	public function registerCommands()
+	{
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			\WP_CLI::add_command( 'raynoti', Command::class );
+			\WP_CLI::add_command( 'raynoti db', DB::class );
+		}
 	}
 }

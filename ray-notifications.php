@@ -12,6 +12,7 @@
  * @package         Ray_Notifications
  */
 
+use HarunRay\Notifications\Activation;
 use HarunRay\Notifications\Initialize;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,6 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'RAY_NOTIFICATIONS_FILE', __FILE__ );
+define( 'RAY_NOTIFICATIONS_PATH', plugin_dir_path( __FILE__ ) );
 
-register_activation_hook( RAY_NOTIFICATIONS_FILE, Initialize::activate() );
-register_deactivation_hook( RAY_NOTIFICATIONS_FILE, Initialize::deactivate() );
+if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
+	require __DIR__ . '/vendor/autoload.php';
+}
+
+register_activation_hook( RAY_NOTIFICATIONS_FILE, [ Activation::class, 'activate' ] );
+register_deactivation_hook( RAY_NOTIFICATIONS_FILE, [ Activation::class, 'deactivate' ] );
+
+Initialize::instance();
