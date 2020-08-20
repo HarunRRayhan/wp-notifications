@@ -22,10 +22,21 @@ class Table
 		  read_at datetime NULL,
 		  created_at datetime DEFAULT CURRENT_TIMESTAMP,
 		  PRIMARY KEY (id)
+		  INDEX (user_id, read_at, created_at)
 		) $charset_collate;";
 
 
 		return static::run( $sql );
+	}
+
+	public static function setIndex()
+	{
+		;
+		global $wpdb;
+		$table_name = static::getTableName();
+		$sql        = "CREATE INDEX index_name ON `{$table_name}` (user_id, read_at, created_at)";
+
+		return $wpdb->query( $sql );
 	}
 
 	public static function drop()

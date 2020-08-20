@@ -53,6 +53,26 @@ class DB extends WP_CLI_Command
 	}
 
 	/**
+	 * Create Column Indexes
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp raynoti db index
+	 *
+	 * @when after_wp_load
+	 * @alias delete
+	 */
+	function index( $args, $assoc_args )
+	{
+		$db = Table::setIndex();
+		if ( ! is_wp_error( $db ) ) {
+			\WP_CLI::success( '"' . Table::getTableName() . '" indexed successfully' );
+		} else {
+			\WP_CLI::error( "Something wrong. Please check your database configurations" );
+		}
+	}
+
+	/**
 	 * Seed Notifications Table with Dummy Data
 	 *
 	 * ## OPTIONS
