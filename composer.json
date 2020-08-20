@@ -1,0 +1,24 @@
+{
+  "name": "rayhan/ray-notifications",
+  "description": "Display Database Optimization in a Plugin",
+  "type": "plugin",
+  "license": "GPL2",
+  "authors": [
+    {
+      "name": "Harun R Rayhan",
+      "email": "harun.b13@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "HarunRay\\Notifications\\": "src/"
+    }
+  }
+}
