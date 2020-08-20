@@ -22,8 +22,10 @@ class Table
 		  description varchar(255) NOT NULL,
 		  read_at datetime NULL,
 		  created_at datetime DEFAULT CURRENT_TIMESTAMP,
-		  PRIMARY KEY (id)
-		  INDEX (user_id, read_at, created_at)
+		  PRIMARY KEY (id),
+		  INDEX (user_id),
+		  INDEX (created_at),
+		  INDEX (read_at),
 		  CONSTRAINT foreign_key_user_id
 		    FOREIGN KEY (user_id)
 		    REFERENCES $users_table(id)
@@ -39,7 +41,11 @@ class Table
 	{
 		global $wpdb;
 		$table_name = static::getTableName();
-		$sql        = "CREATE INDEX index_name ON `{$table_name}` (user_id, read_at, created_at)";
+		$sql        = "
+		CREATE INDEX user_id ON `{$table_name}` (user_id)
+		CREATE INDEX read_at ON `{$table_name}` (read_at)
+		CREATE INDEX created_at ON `{$table_name}` (read_at)
+		";
 
 		return $wpdb->query( $sql );
 	}

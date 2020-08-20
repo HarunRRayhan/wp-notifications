@@ -80,7 +80,6 @@ class DB extends WP_CLI_Command
 	 *     wp raynoti db foreign
 	 *
 	 * @when after_wp_load
-	 * @alias delete
 	 */
 	function foreign( $args, $assoc_args )
 	{
