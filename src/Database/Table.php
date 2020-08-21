@@ -26,7 +26,7 @@ class Table
 		  INDEX (user_id),
 		  INDEX (created_at),
 		  INDEX (read_at),
-		  CONSTRAINT foreign_key_user_id
+		  CONSTRAINT `foreign_key_user_id`
 		    FOREIGN KEY (user_id)
 		    REFERENCES $users_table(id)
 		        ON UPDATE CASCADE
@@ -70,10 +70,14 @@ class Table
 	{
 		global $wpdb;
 		$table_name = static::getTableName();
-		$sql        = "DROP TABLE IF EXISTS `{$table_name}`";
+		$wpdb->query( "SET FOREIGN_KEY_CHECKS = 0;" );
+		$sql = "DROP TABLE IF EXISTS `{$table_name}`;";
+		$run = $wpdb->query( $sql );
+		if ( $run ) {
+			$wpdb->query( "SET FOREIGN_KEY_CHECKS = 1;" );
+		}
 
-		return $wpdb->query( $sql );
-//		return static::run( $sql );
+		return $run;
 	}
 
 	public static function run( $sql )
